@@ -276,7 +276,7 @@
      background: none;
      border: none;
 }
- .login-box .bootstrap-select .btn-light{
+ .login-box a{
      padding: 4px;
      font-size: 14px;
      background: #b0b435;

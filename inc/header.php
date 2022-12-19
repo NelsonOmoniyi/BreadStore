@@ -61,10 +61,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					<div class="login-box">
-						<select id="basic" class="selectpicker show-tick form-control" data-placeholder="Sign In">
-							<option><a href="./signup.php">Register</a></option>
-							<option>Sign In</option>
-						</select>
+							<span><a href="signup.php">Register</a> | <a href="login.php">Sign In</a></span>
 					</div>
                     <div class="text-slid-box">
                         <div id="offer-box" class="carouselTicker">
