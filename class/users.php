@@ -3,10 +3,12 @@ Class Users extends dbobject{
     
     public function login($data)
 	{
+        var_dump($data);
+        exit;
         
 		$username = $data['username'];
 		$password = $data['password'];
-        // var_dump($data);
+        
         $validate = $this->validate($data,array('username'=>'required|email','password'=>'required'));
         if($validate['error'])
         {
