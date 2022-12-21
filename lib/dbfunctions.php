@@ -15,7 +15,7 @@ require('/validation.php');
 //use Aws\S3\S3Client;  
 //use Aws\Exception\AwsException;
 //////////////////////
-class dbobject extends validation
+class dbobject extends dbcnx
 {
   
     function __construct()
@@ -38,7 +38,7 @@ class dbobject extends validation
 		 // if you are performig a UPDATE query; you will need to set $object == false
          file_put_contents('lo.txt',$sql);
 		  $cnx = new dbcnx();
-          $this->myconn = $cnx->connect();
+          $this->myconn = $cnx->__construct();
 		 $result = mysqli_query($this->myconn,$sql);
 		 $count  = ($object)?mysqli_num_rows($result):mysqli_affected_rows($this->myconn);
 		 if($object)

@@ -61,7 +61,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					<div class="login-box">
-						<span><a href="#">Register</a> | <a href="./setup/login.php">Sign In</a></span>
+						<span><a href="#">Register</a> | <a href="./setup/login.php">Sign In</a> | <a href="./setup/logout.php">Logout</a></span>
 					</div>
                     <div class="text-slid-box">
                         <div id="offer-box" class="carouselTicker">

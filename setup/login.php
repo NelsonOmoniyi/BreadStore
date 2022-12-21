@@ -1,4 +1,13 @@
 
+<?php
+	//start session
+	session_start();
+ 
+	//redirect if logged in
+	if(isset($_SESSION['user'])){
+		header('location: logout.php');
+	}
+?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -18,38 +27,30 @@
             <img src="../images/logo.png" alt="Bread Store" class="img-fluid rounded-circle" min-width="132" min-height="132" />
             <h4><strong><b>Exclusive Bread Store</b></strong></h4>
         </div>
-        <form id="form1" onsubmit="return false">
-        <input type="hidden" name="op" value="Users.saveUser">
-        <div class="row" >
-            <div class="col-sm-6">
+        <form method="POST" action="../lib/validation.php">
+            <fieldset>
                 <div class="form-group">
-                    <label class="form-label">Email<span class="asterik">*</span></label><br>
-                    <input type="text" name="username" placeholder="">
+                    <input class="form-control" placeholder="Username" type="text" name="username" autofocus required>
                 </div>
-            </div>
-            <br>
-            <div class="col-sm-6">
-                <div class="form-group ">
-                    <label class="form-label" style="display:block !important">Password<span class="asterik">*</span></label>
-                    <div class="input-group">
-                        <input type="password" autocomplete="off" name="password" id="password" />
-                        <div class="input-group-append" style="cursor:pointer;">
-                            <button id="show" >Show</button>
-                        </div>
-                    </div>
-                    <br>
+                <div class="form-group">
+                    <input class="form-control" placeholder="Password" type="password" name="password" required>
                 </div>
-            </div>
-        </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div id="server_mssg"></div>
-                </div>
-            </div>
-            <button id="save_facility" onclick="saveRecord()" class="btn btn-primary">Submit</button>
+                <button type="submit" name="login" class="btn btn-lg btn-primary btn-block"><span class="glyphicon glyphicon-log-in"></span> Login</button>
+            </fieldset>
         </form>
 
-<script src="../js/jquery-3.2.1.min.js"></script>
+        <?php
+            if(isset($_SESSION['message'])){
+                ?>
+                    <div class="alert alert-info text-center">
+                        <?php echo $_SESSION['message']; ?>
+                    </div>
+                <?php
+
+                unset($_SESSION['message']);
+            }
+        ?>
+<!-- <script src="../js/jquery-3.2.1.min.js"></script>
 <script src="../js/popper.min.js"></script>
 <script src="../js/jquery.superslides.min.js"></script>
 <script src="../js/form-validator.min.js"></script>
@@ -57,10 +58,11 @@
         <script>
             function saveRecord()
             {
-                window.alert("I am Here");
+                // window.alert("I am Here");
                 $("#save_facility").text("Loading......");
                 var dd = $("#form1").serialize();
-                $.post("../utilities.php",dd,function(re)
+                console.log(dd);
+                $.post("./utilities.php",dd,function(re)
                 {
                     console.log(re);
                     $("#save_facility").text("Save");
@@ -68,9 +70,9 @@
                         {
                             $("#server_mssg").text(re.response_message);
                             $("#server_mssg").css({'color':'green','font-weight':'bold'});
-                            getpage('user_list.php','page');
+                            
                             setTimeout(()=>{
-                                $('#defaultModalPrimary').modal('hide');
+                                
                             },1000)
                         }
                     else
@@ -98,7 +100,7 @@
                 }
             });
         
-        </script>
+        </script> -->
     </body>
 </html>  
 

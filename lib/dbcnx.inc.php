@@ -1,26 +1,52 @@
 <?php
-ini_set( 'date.timezone', 'Africa/Lagos' );
+class dbcnx{
+ 
+    private $host = 'localhost';
+    private $username = 'root';
+    private $password = '';
+    private $database = 'breadstore';
+ 
+    protected $connection;
+ 
+    public function __construct(){
+ 
+        if (!isset($this->connection)) {
+ 
+            $this->connection = new mysqli($this->host, $this->username, $this->password, $this->database);
+ 
+            if (!$this->connection) {
+                echo 'Cannot connect to database server';
+                exit;
+            }            
+        }    
+ 
+        return $this->connection;
+    }
 
-class dbcnx
-{
-	public $host  = "localhost";
-     public $user  = "root";
-     public $pass  = "";
-     public $db    = "breadstore";
-    
-
-     public $myconn;
-	public function connect()
-	{
-		$this->myconn = new mysqli($this->host,$this->user, $this->pass ,$this->db );
-	  /* check connection */
-		if (mysqli_connect_errno()) {
-		  printf("Connect failed: %s\n", mysqli_connect_error());
-		  exit();
-		}
-		return $this->myconn;
-	}
+    // public function db_query($sql,$object = true)
+    // {
+        
+    //      $myconn = $this->__construct();
+    //     $result = mysqli_query($myconn,$sql);
+    //     $count  = ($object)?mysqli_num_rows($result):mysqli_affected_rows($myconn);
+    //     if($object)
+    //     {
+    //         if($count > 0)
+    //         {
+    //             $data = array();
+    //             while($row = mysqli_fetch_array($result,MYSQLI_ASSOC))
+    //             {
+    //                 $data[] = $row;
+    //             }
+    //             return $data;
+    //         }else
+    //         {
+    //             return null;
+    //         }
+    //     }else
+    //     {
+    //         return $count;
+    //     }
+    // }
 }
-
-	 
 ?>
