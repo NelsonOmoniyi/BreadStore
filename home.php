@@ -1,38 +1,70 @@
-<?php
-session_start();
-//return to login if not logged in
-if (!isset($_SESSION['user']) ||(trim ($_SESSION['user']) == '')){
-	header('location: setup/login.php');
+<?php require_once "controllerUserData.php"; ?>
+<?php 
+$email = $_SESSION['email'];
+$password = $_SESSION['password'];
+if($email != false && $password != false){
+    $sql = "SELECT * FROM users WHERE email = '$email'";
+    $run_Sql = mysqli_query($con, $sql);
+    if($run_Sql){
+        $fetch_info = mysqli_fetch_assoc($run_Sql);
+        $status = $fetch_info['status'];
+        $code = $fetch_info['code'];
+        if($status == "verified"){
+            if($code != 0){
+                header('Location: reset-code.php');
+            }
+        }else{
+            header('Location: user-otp.php');
+        }
+    }
+}else{
+    header('Location: login-user.php');
 }
- 
-include_once('./class/users.php');
- 
-$user = new User();
- 
-//fetch user data
-$sql = "SELECT * FROM userdata WHERE username = '".$_SESSION['user']."'";
-$row = $user->details($sql);
- 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>PHP Login using OOP Approach</title>
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title><?php echo $fetch_info['firstname'] ?> | Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+    @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+    nav{
+        padding-left: 100px!important;
+        padding-right: 100px!important;
+        background: #6665ee;
+        font-family: 'Poppins', sans-serif;
+    } 
+    nav a.navbar-brand{
+        color: #fff;
+        font-size: 30px!important;
+        font-weight: 500;
+    }
+    button a{
+        color: #6665ee;
+        font-weight: 500;
+    }
+    button a:hover{
+        text-decoration: none;
+    }
+    h1{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        text-align: center;
+        transform: translate(-50%, -50%);
+        font-size: 50px;
+        font-weight: 600;
+    }
+    </style>
 </head>
 <body>
-<div class="container">
-	<h1 class="page-header text-center">PHP Login using OOP Approach</h1>
-	<div class="row">
-		<div class="col-md-4 col-md-offset-4">
-			<h2>Welcome to Homepage </h2>
-			<h4>User Info: </h4>
-			<p>Name: <?php echo $row['firstname']; ?></p>
-			<p>Username: <?php echo $row['username']; ?></p>
-			<p>Password: <?php echo $row['password']; ?></p>
-			<a href="./setup/logout.php" class="btn btn-danger"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
-		</div>
-	</div>
-</div>
+    <nav class="navbar">
+    <a class="navbar-brand" href="#">OrderIt</a>
+    <button type="button" class="btn btn-light"><a href="index.html">Logout</a></button>
+    </nav>
+    <h1>Welcome <?php echo $fetch_info['firstname'] ?></h1>
+    
 </body>
 </html>
